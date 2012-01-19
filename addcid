@@ -1,0 +1,10 @@
+#!/usr/bin/perl
+use strict;
+open(my $fh,$ARGV[0]) || die "Can't open $ARGV[0]: $!\n";
+while(<$fh>){
+	if(/^(ATOM|HETATM)/){
+		substr($_,21,1) = sprintf("%1s",substr($_,72,1));
+	}
+	print;
+}
+close $fh;

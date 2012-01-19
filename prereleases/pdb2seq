@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+use strict;
+
+my %AA = ( 
+	ALA => 'A', ARG => 'R', ASN => 'N', ASP => 'D', CYS => 'C', GLN => 'Q', GLU => 'E',
+	GLY => 'G', HIS => 'H', ILE => 'I', LEU => 'L', LYS => 'K', MET => 'M', PHE => 'F',
+	PRO => 'P', SER => 'S', THR => 'T', TRP => 'W', TYR => 'Y', VAL => 'V', MSE => 'M',
+);
+
+my $file = $ARGV[0];
+open(my $fh, $file) || die "Can't open $file [$!]\n";
+my ($lastrno,$lastcid) = (-1,"");
+my %chain;
+while(<$fh>){
+	/^(ATOM  |HETATM)/ || next;
+	my $res = substr($_,17,3);
+	my $rno = substr($_,22,4);
+	my $cid = substr($_,21,1);
+	if($lastrno != $rno || $lastcid ne $cid){
+		exists($chain{$cid}) || ($chain{$cid} = []);
+		push(@{$chain{$cid}},exists($AA{$res}) ? $AA{$res} : 'x');
+		$lastrno = $rno;
+		$lastcid = $cid;
+	}
+}
+close $fh;
+
+foreach my $key (sort(keys(%chain))) {
+	print "> Chain $key\n";
+	print join("",@{$chain{$key}}) . "\n";
+}
+

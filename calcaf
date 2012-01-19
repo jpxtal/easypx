@@ -1,0 +1,19 @@
+#!/bin/bash
+# 異常分散項(F',F")をCROSSECで求める
+# 2009-05-08 by Nob-rin
+SPECIES=$1
+SPECIES=`echo $SPECIES | tr "[a-z]" "[A-Z]"`
+WLEN=$2
+
+echo "SPECIES     WLEN      F'          F\""
+crossec <<EOS | grep "^$SPECIES"
+	ATOM $SPECIES
+	NWAV 1 $WLEN
+EOS
+###
+## usage
+# calcaf <b>ATOM</b> <b>WAVELENGTH</b>
+## example
+# <b>% calcaf se 0.9898</b>
+# SPECIES     WLEN      F'          F"
+# SE          0.9898    -4.1403     0.5089

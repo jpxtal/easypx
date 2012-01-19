@@ -1,0 +1,29 @@
+#!/bin/bash
+# カレントディレクトリ以下から001.imgを検索して、
+# WAVELENGTHパラメータから異常分散項を求める
+# 2009-05-14 by Nob-rin
+
+declare -a FACTORS
+function set_factors () {
+	SPECIES=$1
+	SPECIES=`echo $SPECIES | tr "[a-z]" "[A-Z]"`
+	WLEN=$2
+
+	LST=$(
+		crossec <<EOS | grep "^$SPECIES"
+			ATOM $SPECIES
+			NWAV 1 $WLEN
+		EOS
+	)
+	FACTORS=($LST)
+}
+
+[ "$1" ] || { echo "Usage: getafs SPECIES"; exit 1; }
+echo FILE/SP/WLEN/F\'/F\"
+for fn in `find ./ -name "*001.img"`
+do
+	wlen=`strings $fn | sed -n 's/^WAVELENGTH=\([0-9\.]\+\);/\1/p'`
+	[ "$wlen" ] || { echo "$fn has no WAVELENGTH parameter. Skip."; continue; }
+	set_factors $1 $wlen
+	echo $fn ${FACTORS[0]} $wlen ${FACTORS[2]} ${FACTORS[3]}
+done
