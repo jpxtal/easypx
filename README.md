@@ -13,6 +13,7 @@ Scripts
 - calcaf -- Obtain annomalous scattering factor with using *[CROSSEC][]*. (from BioKids)
 - getafs -- Obtain annomalous scattering facter with using *[CROSSEC][]* and measured images. (from BioKids)
 - getpdb -- Download PDB file from pdb.org with PDB ID.
+- autocoot -- Launch coot with the latest PDB file and the latest MTZ file (must be auto-openable) in the current directory.
 
 Pre-releases
 ------------

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+unset GTK_IM_MODULE
+
+pdb=(`ls -t *.pdb`)
+mtz=(`ls -t *.mtz`)
+
+echo coot --pdb ${pdb[0]} --auto ${mtz[0]}
+sleep 1
+coot --pdb ${pdb[0]} --auto ${mtz[0]} --no-state-script
+
