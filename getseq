@@ -1,0 +1,9 @@
+#!/bin/sh
+PDBSITE=http://www.pdb.org/pdb/download/downloadFile.do
+if [ -z $1 ] ; then
+	echo Usage:
+	echo "   " $0 PDB_ID
+	exit -1
+fi
+echo $PDBSITE
+wget -O $1.seq "$PDBSITE?fileFormat=FASTA&compression=NO&structureId=$1"
