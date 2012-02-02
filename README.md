@@ -6,6 +6,10 @@ Synopsis
 --------
 **EasyPX** is a script collection aims to make boring processes simple.
 
+License
+-------
+AS IS.
+
 Scripts
 -------
 - addcid -- Add ChainID to PDB from SEGID.
